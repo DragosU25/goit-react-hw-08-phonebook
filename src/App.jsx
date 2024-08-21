@@ -1,28 +1,34 @@
 // src/App.jsx
-import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import ContactForm from 'components/ContactForm';
-import ContactList from 'components/ContactList';
-import FilterInput from 'components/FilterInput';
-import { getContacts } from './redux/contacts/contactsSelector';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
+import Register from 'pages/Register';
+import Login from 'pages/Login';
+import Contacts from 'pages/Contacts';
+import Navigation from 'components/Navigation/Navigation';
+import PrivateRoute from 'components/PrivateRoute/PrivateRoute';
+import PublicRoute from 'components/PublicRoute/PublicRoute';
 import styles from 'App.module.css';
 
 function App() {
-  const contacts = useSelector(getContacts);
-
-  useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
-
   return (
-    <div className={styles.app}>
-      <h1 className={styles.title}>Phonebook</h1>
-      <ContactForm />
-      <h2 className={styles.subtitle}>Contacts</h2>
-      <FilterInput />
-      <ContactList />
-    </div>
+    <Router>
+      <div className={styles.app}>
+        <Navigation />
+        <Routes>
+          <Route path="/" element={<h1>Welcome to Phonebook!</h1>} />
+          <Route
+            path="/register"
+            element={<PublicRoute component={Register} />}
+          />
+          <Route path="/login" element={<PublicRoute component={Login} />} />
+          <Route
+            path="/contacts"
+            element={<PrivateRoute component={Contacts} />}
+          />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

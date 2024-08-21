@@ -1,22 +1,28 @@
-import React, { StrictMode } from 'react';
+import React, { StrictMode, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
-import { Provider } from 'react-redux';
-import { store } from 'store/store';
+import { Provider, useDispatch } from 'react-redux';
+import { store } from './store/store';
 import App from './App';
+import { refreshUser } from './redux/operations';
 import './index.css';
-import 'App.module.css';
 
-// Obține elementul root
+const Root = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(refreshUser());
+  }, [dispatch]);
+
+  return <App />;
+};
+
 const rootElement = document.getElementById('root');
-
-// Creează un root
 const root = ReactDOM.createRoot(rootElement);
 
-// Renderizează aplicația
 root.render(
   <StrictMode>
     <Provider store={store}>
-      <App />
+      <Root />
     </Provider>
   </StrictMode>
 );
