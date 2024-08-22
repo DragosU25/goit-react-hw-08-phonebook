@@ -1,4 +1,3 @@
-// src/App.jsx
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
@@ -19,12 +18,12 @@ function App() {
           <Route path="/" element={<h1>Welcome to Phonebook!</h1>} />
           <Route
             path="/register"
-            element={<PublicRoute component={Register} />}
+            element={<PublicRoute element={<Register />} />}
           />
-          <Route path="/login" element={<PublicRoute component={Login} />} />
+          <Route path="/login" element={<PublicRoute element={<Login />} />} />
           <Route
             path="/contacts"
-            element={<PrivateRoute component={Contacts} />}
+            element={<PrivateRoute element={<Contacts />} />}
           />
         </Routes>
       </div>
