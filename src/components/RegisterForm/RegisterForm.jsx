@@ -21,7 +21,7 @@ function RegisterForm() {
         setErrorMessage('');
       })
       .catch(err => {
-        setErrorMessage('An error occurred. Please try again.');
+        setErrorMessage('Error: Account with this email already exists.');
       });
   };
 

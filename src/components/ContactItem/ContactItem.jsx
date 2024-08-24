@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { deleteContact } from '../../redux/operations';
@@ -7,14 +7,9 @@ import styles from './ContactItem.module.css';
 function ContactItem({ contact }) {
   const dispatch = useDispatch();
   const { id, name, number } = contact;
-  const [error, setError] = useState(null);
 
-  const handleDelete = async () => {
-    try {
-      await dispatch(deleteContact(id)).unwrap();
-    } catch (err) {
-      setError('Failed to delete contact. Please try again.');
-    }
+  const handleDelete = () => {
+    dispatch(deleteContact(id));
   };
 
   return (
@@ -22,7 +17,6 @@ function ContactItem({ contact }) {
       <p>
         {name}: {number}
       </p>
-      {error && <p className={styles.error}>{error}</p>}
       <button className={styles.deleteButton} onClick={handleDelete}>
         Delete
       </button>
