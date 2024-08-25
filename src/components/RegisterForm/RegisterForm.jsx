@@ -21,7 +21,8 @@ function RegisterForm() {
         setErrorMessage('');
       })
       .catch(err => {
-        setErrorMessage('Error: Account with this email already exists.');
+        // Afișează mesajul de eroare specific
+        setErrorMessage(err || 'An unknown error occurred.');
       });
   };
 

@@ -22,7 +22,21 @@ export const register = createAsyncThunk(
       setAuthHeader(response.data.token);
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      // Verifică dacă există o eroare de răspuns
+      if (error.response && error.response.data) {
+        const { data } = error.response;
+        // Verifică dacă codul de eroare este 11000 (MongoDB Duplicate Key Error)
+        if (data.code === 11000) {
+          return thunkAPI.rejectWithValue(
+            'An account with this email already exists.'
+          );
+        }
+        // Alte erori pot fi tratate aici
+        return thunkAPI.rejectWithValue(
+          data.message || 'An unknown error occurred.'
+        );
+      }
+      return thunkAPI.rejectWithValue('An unknown error occurred.');
     }
   }
 );
